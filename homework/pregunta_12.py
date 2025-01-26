@@ -4,9 +4,23 @@ datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
-
+import csv
 
 def pregunta_12():
+    with open('files/input/data.csv', 'r') as file:
+        data = list(csv.reader(file, delimiter='\t'))
+    
+    dict_data = {}
+    for row in data:
+        key = row[0]
+        values = [int(pair.split(':')[1]) for pair in row[4].split(',')]
+        if key in dict_data:
+            dict_data[key] += sum(values)
+        else:
+            dict_data[key] = sum(values)
+    
+    dict_data = dict(sorted(dict_data.items()))
+    return dict_data
     """
     Genere un diccionario que contengan como clave la columna 1 y como valor
     la suma de los valores de la columna 5 sobre todo el archivo.

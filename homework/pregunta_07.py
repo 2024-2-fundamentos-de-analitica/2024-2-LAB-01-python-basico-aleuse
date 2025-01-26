@@ -4,11 +4,26 @@ datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
-
+import csv
 
 def pregunta_07():
+    with open('files/input/data.csv', 'r') as file:
+        data = list(csv.reader(file, delimiter='\t'))
+        
+    dict_data = {}
+    for row in data:
+        key = int(row[1])  
+        if key not in dict_data:
+            dict_data[key] = [row[0]]
+        else:
+            dict_data[key].append(row[0])
+    
+    list_data = list(dict_data.items())
+    list_data.sort(key=lambda x: x[0])
+    return list_data
+    
     """
-    Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla
+    Retorne una lista de tuplas que asocien las columnas 1 y 2. Cada tupla
     contiene un valor posible de la columna 2 y una lista con todas las letras
     asociadas (columna 1) a dicho valor de la columna 2.
 
@@ -25,3 +40,5 @@ def pregunta_07():
      (9, ['A', 'B', 'E', 'A', 'A', 'C'])]
 
     """
+
+print(pregunta_07())

@@ -4,9 +4,24 @@ datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
-
+import csv
 
 def pregunta_08():
+    with open('files/input/data.csv', 'r') as file:
+        data = list(csv.reader(file, delimiter='\t'))
+        
+    dict_data = {}
+    for row in data:
+        key = int(row[1])  
+        if key not in dict_data:
+            dict_data[key] = set([row[0]])
+        else:
+            dict_data[key].add(row[0])
+    
+    list_data = [(k, sorted(list(v))) for k, v in dict_data.items()]
+    list_data.sort(key=lambda x: x[0])
+    return list_data
+    
     """
     Genere una lista de tuplas, donde el primer elemento de cada tupla
     contiene  el valor de la segunda columna; la segunda parte de la tupla
